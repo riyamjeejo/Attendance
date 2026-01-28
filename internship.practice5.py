@@ -1,20 +1,25 @@
 import tkinter as tk
-
-# Create the main window
-root = tk.Tk()
-root.title("Simple Log App")
-root.geometry("1000x500")
-label = tk.Label(root, text="LOGING")
-label.pack(pady=10)
-def on_button_click():
-    label.config(text="Enter your name")
-
+from tkinter import messagebox
 import csv
 from datetime import datetime
+
 filename = "check_out.csv"
 
+def validate_login():
+    user = username_entry.get()
+    pwd  = password_entry.get()
+
+    if user == "admin" and pwd == "password":
+        messagebox.showinfo("Login Status", "Login Successful!")
+    else:
+        messagebox.showerror("Login Status", "Invalid username or password")
+
 def check_in():
-    name = input("Enter your name: ")
+    name = name_entry.get().strip()
+    if not name:
+        messagebox.showwarning("Input Error", "Enter a name to check in")
+        return
+    
     check_in_time = datetime.now()
     with open(filename, mode="a",newline="") as file:
         writer = csv.writer(file)
